@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Fresh Eggs Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        #app {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-cols-3 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .min-h-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bg-gradient {
+            background: linear-gradient(to bottom, #fef3c7, #fed7aa);
+        }
+
+        .bg-gray-50 {
+            background-color: #f9fafb;
+        }
+
+        .bg-white {
+            background-color: #ffffff;
+        }
+
+        .bg-orange-500 {
+            background-color: #f97316;
+        }
+
+        .bg-orange-600 {
+            background-color: #ea580c;
+        }
+
+        .bg-orange-700 {
+            background-color: #c2410c;
+        }
+
+        .bg-orange-800 {
+            background-color: #92400e;
+        }
+
+        .bg-green-500 {
+            background-color: #22c55e;
+        }
+
+        .bg-green-600 {
+            background-color: #16a34a;
+        }
+
+        .bg-green-100 {
+            background-color: #dcfce7;
+        }
+
+        .bg-yellow-100 {
+            background-color: #fef08a;
+        }
+
+        .bg-gray-200 {
+            background-color: #e5e7eb;
+        }
+
+        .bg-gray-300 {
+            background-color: #d1d5db;
+        }
+
+        .text-white {
+            color: white;
+        }
+
+        .text-gray-600 {
+            color: #4b5563;
+        }
+
+        .text-gray-700 {
+            color: #374151;
+        }
+
+        .text-gray-900 {
+            color: #111827;
+        }
+
+        .text-orange-600 {
+            color: #ea580c;
+        }
+
+        .text-orange-700 {
+            color: #c2410c;
+        }
+
+        .text-orange-900 {
+            color: #78350f;
+        }
+
+        .text-green-700 {
+            color: #15803d;
+        }
+
+        .text-yellow-700 {
+            color: #ca8a04;
+        }
+
+        .text-red-500 {
+            color: #ef4444;
+        }
+
+        .text-red-700 {
+            color: #b91c1c;
+        }
+
+        .text-2xl {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .text-3xl {
+            font-size: 1.875rem;
+            font-weight: bold;
+        }
+
+        .text-4xl {
+            font-size: 2.25rem;
+            font-weight: bold;
+        }
+
+        .text-6xl {
+            font-size: 3.75rem;
+            font-weight: bold;
+        }
+
+        .text-8xl {
+            font-size: 6rem;
+        }
+
+        .text-lg {
+            font-size: 1.125rem;
+        }
+
+        .text-xl {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .text-sm {
+            font-size: 0.875rem;
+        }
+
+        .font-bold {
+            font-weight: bold;
+        }
+
+        .font-semibold {
+            font-weight: 600;
+        }
+
+        .font-medium {
+            font-weight: 500;
+        }
+
+        .mb-1 {
+            margin-bottom: 0.25rem;
+        }
+
+        .mb-2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+
+        .mb-6 {
+            margin-bottom: 1.5rem;
+        }
+
+        .mb-8 {
+            margin-bottom: 2rem;
+        }
+
+        .mt-1 {
+            margin-top: 0.25rem;
+        }
+
+        .mt-2 {
+            margin-top: 0.5rem;
+        }
+
+        .mt-3 {
+            margin-top: 0.75rem;
+        }
+
+        .mt-4 {
+            margin-top: 1rem;
+        }
+
+        .mt-8 {
+            margin-top: 2rem;
+        }
+
+        .p-4 {
+            padding: 1rem;
+        }
+
+        .p-6 {
+            padding: 1.5rem;
+        }
+
+        .p-8 {
+            padding: 2rem;
+        }
+
+        .px-2 {
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+
+        .px-3 {
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
+
+        .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .px-6 {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+
+        .px-8 {
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        .py-1 {
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+        }
+
+        .py-2 {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .py-3 {
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
+
+        .py-4 {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .py-12 {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+
+        .gap-2 {
+            gap: 0.5rem;
+        }
+
+        .gap-4 {
+            gap: 1rem;
+        }
+
+        .gap-6 {
+            gap: 1.5rem;
+        }
+
+        .rounded {
+            border-radius: 0.25rem;
+        }
+
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+
+        .rounded-bl-lg {
+            border-bottom-left-radius: 0.5rem;
+        }
+
+        .rounded-tr-lg {
+            border-top-right-radius: 0.5rem;
+        }
+
+        .rounded-full {
+            border-radius: 9999px;
+        }
+
+        .shadow-sm {
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .border {
+            border: 1px solid #d1d5db;
+        }
+
+        .border-b {
+            border-bottom: 1px solid #d1d5db;
+        }
+
+        .border-gray-300 {
+            border-color: #d1d5db;
+        }
+
+        .border-t {
+            border-top: 1px solid #d1d5db;
+        }
+
+        .last\:border-b-0:last-child {
+            border-bottom: none;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-weight: 500;
+        }
+
+        button:hover:not(:disabled) {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        input, textarea, select {
+            font-family: inherit;
+            border: 2px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 0.75rem 0.75rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #f97316;
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #9ca3af;
+        }
+
+        input:valid {
+            border-color: #22c55e;
+        }
+
+        .flex {
+            display: flex;
+            align-items: center;
+        }
+
+        .flex-col {
+            flex-direction: column;
+        }
+
+        .justify-center {
+            justify-content: center;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        nav {
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideInUp 0.3s ease-out;
+        }
+
+        nav button {
+            transition: color 0.3s ease;
+        }
+
+        nav button:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .nav-orange {
+            background-color: #ea580c;
+            color: white;
+        }
+
+        .nav-orange h1 {
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .space-y-2 > * + * {
+            margin-top: 0.5rem;
+        }
+
+        .space-y-3 > * + * {
+            margin-top: 0.75rem;
+        }
+
+        .space-y-4 > * + * {
+            margin-top: 1rem;
+        }
+
+        .w-full {
+            width: 100%;
+        }
+
+        .w-20 {
+            width: 5rem;
+        }
+
+        .max-w-md {
+            max-width: 28rem;
+        }
+
+        .max-w-4xl {
+            max-width: 56rem;
+        }
+
+        .max-w-6xl {
+            max-width: 72rem;
+        }
+
+        .relative {
+            position: relative;
+        }
+
+        .absolute {
+            position: absolute;
+        }
+
+        .top-0 {
+            top: 0;
+        }
+
+        .right-0 {
+            right: 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .flex-wrap {
+            flex-wrap: wrap;
+        }
+
+        .items-start {
+            align-items: flex-start;
+        }
+
+        .page-content {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .grid-cols-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .text-6xl {
+                font-size: 2.25rem;
+            }
+
+            .text-8xl {
+                font-size: 3rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .flex-wrap {
+                flex-wrap: wrap;
+            }
+
+            .grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #22c55e;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            animation: slideInUp 0.3s ease-out;
+            z-index: 1000;
+            max-width: 300px;
+        }
+
+        .toast.error {
+            background-color: #ef4444;
+        }
+
+        .toast.warning {
+            background-color: #f59e0b;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #f97316;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Product card hover effect */
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Best value badge animation */
+        .best-value-badge {
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        /* Form validation */
+        .form-group {
+            animation: slideInUp 0.3s ease-out;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Cart item animation */
+        .cart-item {
+            animation: slideInUp 0.3s ease-out;
+        }
+
+        .cart-item:hover {
+            background-color: #f9fafb;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+        // Toast notification system
+        class Toast {
+            static show(message, type = 'success', duration = 3000) {
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.textContent = message;
+                document.body.appendChild(toast);
+
+                setTimeout(() => {
+                    toast.style.animation = 'slideInUp 0.3s ease-out reverse';
+                    setTimeout(() => toast.remove(), 300);
+                }, duration);
+            }
+        }
+
+        // Local Storage Manager
+        class Storage {
+            static set(key, value) {
+                localStorage.setItem(key, JSON.stringify(value));
+            }
+
+            static get(key) {
+                const value = localStorage.getItem(key);
+                return value ? JSON.parse(value) : null;
+            }
+
+            static remove(key) {
+                localStorage.removeItem(key);
+            }
+
+            static clear() {
+                localStorage.clear();
+            }
+        }
+
+        // App State Management
+        class EggStore {
+            constructor() {
+                this.products = [
+                    { id: 1, name: '4-Egg Pack', eggs: 4, price: 0.50, stock: 200 },
+                    { id: 2, name: '8-Egg Pack', eggs: 8, price: 0.99, stock: 200 },
+                    { id: 3, name: 'Crate', eggs: 36, price: 3.75, stock: 50 }
+                ];
+
+                this.currentPage = 'home';
+                this.cart = Storage.get('cart') || [];
+                this.orders = Storage.get('orders') || [];
+                this.isAdmin = false;
+                this.crateSize = 36;
+                this.editingProduct = null;
+
+                this.adminEmail = '';
+                this.adminPassword = '';
+
+                this.customerInfo = {
+                    name: '',
+                    phone: '',
+                    address: '',
+                    payment: 'cash'
+                };
+
+                this.render();
+            }
+
+            saveCart() {
+                Storage.set('cart', this.cart);
+            }
+
+            saveOrders() {
+                Storage.set('orders', this.orders);
+            }
+
+            setPage(page) {
+                this.currentPage = page;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                this.render();
+            }
+
+            addToCart(product) {
+                if (product.stock <= 0) {
+                    Toast.show('Product is out of stock', 'warning');
+                    return;
+                }
+
+                const existing = this.cart.find(item => item.id === product.id);
+                if (existing) {
+                    existing.quantity++;
+                } else {
+                    this.cart.push({ ...product, quantity: 1 });
+                }
+                this.saveCart();
+                Toast.show(`${product.name} added to cart!`, 'success');
+                this.render();
+            }
+
+            updateCartQuantity(id, quantity) {
+                if (quantity <= 0) {
+                    this.removeFromCart(id);
+                    return;
+                }
+
+                const item = this.cart.find(i => i.id === id);
+                if (item) {
+                    item.quantity = quantity;
+                    this.saveCart();
+                    this.render();
+                }
+            }
+
+            removeFromCart(id) {
+                const item = this.cart.find(i => i.id === id);
+                if (item) {
+                    Toast.show(`${item.name} removed from cart`, 'success');
+                }
+                this.cart = this.cart.filter(item => item.id !== id);
+                this.saveCart();
+                this.render();
+            }
+
+            getCartTotal() {
+                return this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2);
+            }
+
+            getCartItemCount() {
+                return this.cart.reduce((sum, item) => sum + item.quantity, 0);
+            }
+
+            handleCheckout() {
+                if (!this.customerInfo.name || !this.customerInfo.phone || !this.customerInfo.address) {
+                    Toast.show('Please fill in all fields', 'error');
+                    return;
+                }
+
+                // Validate phone number
+                if (!/^\d{3}-?\d{3}-?\d{4}$/.test(this.customerInfo.phone.replace(/\D/g, ''))) {
+                    Toast.show('Please enter a valid phone number', 'error');
+                    return;
+                }
+
+                const newOrder = {
+                    id: Date.now(),
+                    items: [...this.cart],
+                    total: this.getCartTotal(),
+                    customer: { ...this.customerInfo },
+                    status: 'pending',
+                    date: new Date().toLocaleString()
+                };
+
+                this.orders.push(newOrder);
+                this.saveOrders();
+
+                // Update stock
+                this.cart.forEach(cartItem => {
+                    const product = this.products.find(p => p.id === cartItem.id);
+                    if (product) {
+                        product.stock -= cartItem.quantity;
+                    }
+                });
+
+                this.cart = [];
+                this.saveCart();
+                this.customerInfo = { name: '', phone: '', address: '', payment: 'cash' };
+                Toast.show('Order placed successfully!', 'success');
+                this.setPage('success');
+            }
+
+            handleAdminLogin() {
+                if (this.adminEmail === 'admin@eggs.com' && this.adminPassword === 'admin123') {
+                    this.isAdmin = true;
+                    this.setPage('admin');
+                    this.adminEmail = '';
+                    this.adminPassword = '';
+                    Toast.show('Welcome to Admin Dashboard!', 'success');
+                } else {
+                    Toast.show('Invalid credentials', 'error');
+                }
+            }
+
+            updateProduct(id, updates) {
+                const product = this.products.find(p => p.id === id);
+                if (product) {
+                    Object.assign(product, updates);
+                    Toast.show('Product updated successfully!', 'success');
+                }
+                this.editingProduct = null;
+                this.render();
+            }
+
+            markOrderComplete(orderId) {
+                const order = this.orders.find(o => o.id === orderId);
+                if (order) {
+                    order.status = 'completed';
+                    this.saveOrders();
+                    Toast.show('Order marked as completed!', 'success');
+                }
+                this.render();
+            }
+
+            setCrateSize(size) {
+                this.crateSize = size;
+                const crateProduct = this.products.find(p => p.id === 3);
+                if (crateProduct) {
+                    crateProduct.eggs = size;
+                }
+                Toast.show(`Crate size updated to ${size} eggs!`, 'success');
+                this.render();
+            }
+
+            getBestValueIndex() {
+                const unitPrices = this.products.map(p => p.price / p.eggs);
+                const minPrice = Math.min(...unitPrices);
+                return this.products.findIndex(p => (p.price / p.eggs) === minPrice);
+            }            
+
+            render() {
+                const app = document.getElementById('app');
+                
+                if (this.currentPage === 'home') {
+                    app.innerHTML = this.renderHome();
+                } else if (this.currentPage === 'shop') {
+                    app.innerHTML = this.renderShop();
+                } else if (this.currentPage === 'cart') {
+                    app.innerHTML = this.renderCart();
+                } else if (this.currentPage === 'checkout') {
+                    app.innerHTML = this.renderCheckout();
+                } else if (this.currentPage === 'success') {
+                    app.innerHTML = this.renderSuccess();
+                } else if (this.currentPage === 'admin-login') {
+                    app.innerHTML = this.renderAdminLogin();
+                } else if (this.currentPage === 'admin') {
+                    app.innerHTML = this.renderAdminDashboard();
+                }
+
+                this.attachEventListeners();
+            }
+
+            renderHome() {
+                return `
+                    <div class="min-h-screen bg-gradient flex-col">
+                        <div class="text-center">
+                            <div class="text-8xl mb-8">🟡</div>
+                            <h1 class="text-6xl font-bold text-orange-900 mb-4">Farm Fresh Eggs</h1>
+                            <p class="text-2xl text-orange-700 mb-8">Affordable, uniform-size eggs delivered fresh</p>
+                            <button class="btn-shop-now bg-orange-500 text-white px-8 py-4 rounded-lg text-xl font-semibold hover:bg-orange-600 transition">
+                                Shop Now
+                            </button>
+                            <div class="mt-8">
+                                <button class="btn-admin-login text-orange-600 hover:text-orange-700 text-sm underline" style="background: none; padding: 0;">
+                                    Admin Login
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderShop() {
+                const bestValueIndex = this.getBestValueIndex();
+
+                return `
+                    <div class="bg-gray-50" style="min-height: 100vh;">
+                        <nav class="shadow-sm">
+                            <h1 class="text-2xl font-bold text-orange-900">🟡 Farm Fresh Eggs</h1>
+                            <div class="flex gap-4">
+                                <button class="btn-home text-gray-600 hover:text-gray-900" style="background: none; padding: 0;">
+                                    Home
+                                </button>
+                                <button class="btn-cart-view bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 flex">
+                                    🛒 Cart (${this.getCartItemCount()})
+                                </button>
+                            </div>
+                        </nav>
+
+                        <div class="container" style="padding: 2rem;">
+                            <h2 class="text-3xl font-bold text-gray-900 mb-8">Our Products</h2>
+                            <div class="grid grid-cols-3" style="gap: 1.5rem;">
+                                ${this.products.map((product, index) => `
+                                    <div class="product-card bg-white rounded-lg shadow-md p-6 relative" style="position: relative;">
+                                        ${index === bestValueIndex ? `
+                                            <div class="best-value-badge" style="position: absolute; top: 0; right: 0; background-color: #22c55e; color: white; padding: 0.5rem 0.75rem; border-radius: 0 0.5rem 0 0.5rem; font-size: 0.875rem; font-weight: 600;">
+                                                ⭐ Best Value
+                                            </div>
+                                        ` : ''}
+                                        <div class="text-5xl mb-4">🥚</div>
+                                        <h3 class="text-xl font-bold text-gray-900 mb-2">${product.name}</h3>
+                                        <p class="text-gray-600 mb-2">${product.eggs} eggs</p>
+                                        <p class="text-3xl font-bold text-orange-600 mb-2">$${product.price.toFixed(2)}</p>
+                                        <p class="text-sm text-gray-500 mb-4">$${(product.price / product.eggs).toFixed(3)}/egg</p>
+                                        <p class="text-sm text-gray-500 mb-4">Stock: ${product.stock}</p>
+                                        <button class="btn-add-to-cart w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 ${product.stock === 0 ? 'disabled:bg-gray-300 disabled:cursor-not-allowed' : ''}" data-product-id="${product.id}" ${product.stock === 0 ? 'disabled' : ''}>
+                                            ${product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+                                        </button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderCart() {
+                return `
+                    <div class="bg-gray-50" style="min-height: 100vh;">
+                        <nav class="shadow-sm">
+                            <h1 class="text-2xl font-bold text-orange-900">🟡 Shopping Cart</h1>
+                            <button class="btn-continue-shop text-orange-600 hover:text-orange-700" style="background: none; padding: 0;">
+                                Continue Shopping
+                            </button>
+                        </nav>
+
+                        <div class="container max-w-4xl" style="padding: 2rem;">
+                            ${this.cart.length === 0 ? `
+                                <div class="text-center py-12">
+                                    <p class="text-xl text-gray-600 mb-4">Your cart is empty</p>
+                                    <button class="btn-start-shop bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600">
+                                        Start Shopping
+                                    </button>
+                                </div>
+                            ` : `
+                                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                                    ${this.cart.map(item => `
+                                        <div class="cart-item flex items-center justify-between py-4 border-b" style="border-bottom: 1px solid #d1d5db; padding: 1rem 0;">
+                                            <div class="flex items-center gap-4">
+                                                <div class="text-3xl">🥚</div>
+                                                <div>
+                                                    <h3 class="font-semibold text-gray-900">${item.name}</h3>
+                                                    <p class="text-gray-600">$${item.price.toFixed(2)} each</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-4">
+                                                <div class="flex items-center gap-2">
+                                                    <button class="btn-qty-dec bg-gray-200 px-3 py-1 rounded hover:bg-gray-300" data-item-id="${item.id}">−</button>
+                                                    <span class="px-4 font-semibold">${item.quantity}</span>
+                                                    <button class="btn-qty-inc bg-gray-200 px-3 py-1 rounded hover:bg-gray-300" data-item-id="${item.id}">+</button>
+                                                </div>
+                                                <p class="font-bold text-gray-900 w-20 text-right">
+                                                    $${(item.price * item.quantity).toFixed(2)}
+                                                </p>
+                                                <button class="btn-remove text-red-500 hover:text-red-700" style="background: none; padding: 0;" data-item-id="${item.id}">🗑️</button>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+
+                                <div class="bg-white rounded-lg shadow-md p-6">
+                                    <div class="flex justify-between items-center text-2xl font-bold mb-6">
+                                        <span>Total:</span>
+                                        <span class="text-orange-600">$${this.getCartTotal()}</span>
+                                    </div>
+                                    <button class="btn-checkout w-full bg-orange-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-orange-600">
+                                        Proceed to Checkout
+                                    </button>
+                                </div>
+                            `}
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderCheckout() {
+                return `
+                    <div class="bg-gray-50" style="min-height: 100vh;">
+                        <nav class="shadow-sm">
+                            <h1 class="text-2xl font-bold text-orange-900">🟡 Checkout</h1>
+                        </nav>
+
+                        <div class="container max-w-4xl" style="padding: 2rem;">
+                            <div class="grid grid-cols-2" style="gap: 1.5rem;">
+                                <div class="bg-white rounded-lg shadow-md p-6">
+                                    <h2 class="text-xl font-bold mb-4">Customer Information</h2>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                            <input type="text" id="customer-name" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="John Doe" value="${this.customerInfo.name}">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                                            <input type="tel" id="customer-phone" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="555-0123" value="${this.customerInfo.phone}">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Delivery Address</label>
+                                            <textarea id="customer-address" class="w-full border border-gray-300 rounded-lg px-3 py-2" rows="3" placeholder="123 Main St, City, State">${this.customerInfo.address}</textarea>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Payment Method</label>
+                                            <select id="customer-payment" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                                                <option value="cash" ${this.customerInfo.payment === 'cash' ? 'selected' : ''}>Cash on Delivery</option>
+                                                <option value="card" ${this.customerInfo.payment === 'card' ? 'selected' : ''}>Credit/Debit Card</option>
+                                                <option value="mobile" ${this.customerInfo.payment === 'mobile' ? 'selected' : ''}>Mobile Payment</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white rounded-lg shadow-md p-6">
+                                    <h2 class="text-xl font-bold mb-4">Order Summary</h2>
+                                    <div class="space-y-2 mb-4">
+                                        ${this.cart.map(item => `
+                                            <div class="flex justify-between text-gray-700">
+                                                <span>${item.name} × ${item.quantity}</span>
+                                                <span>$${(item.price * item.quantity).toFixed(2)}</span>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                    <div class="border-t pt-4 mb-6" style="border-top: 1px solid #d1d5db; padding-top: 1rem;">
+                                        <div class="flex justify-between text-2xl font-bold">
+                                            <span>Total:</span>
+                                            <span class="text-orange-600">$${this.getCartTotal()}</span>
+                                        </div>
+                                    </div>
+                                    <button class="btn-confirm w-full bg-orange-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-orange-600 mb-2">
+                                        Confirm Order
+                                    </button>
+                                    <button class="btn-back-cart w-full bg-gray-200 text-gray-700 py-3 rounded-lg hover:bg-gray-300">
+                                        Back to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderSuccess() {
+                return `
+                    <div class="min-h-screen bg-gray-50 flex-col" style="justify-content: center;">
+                        <div class="bg-white rounded-lg shadow-md p-8 max-w-md text-center">
+                            <div style="font-size: 4rem; color: #22c55e; margin: 1rem auto; width: fit-content;">✓</div>
+                            <h2 class="text-2xl font-bold text-gray-900 mb-2">Order Confirmed!</h2>
+                            <p class="text-gray-600 mb-6">
+                                Thank you for your order. We'll deliver your fresh eggs soon!
+                            </p>
+                            <button class="btn-back-home bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600">
+                                Back to Home
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderAdminLogin() {
+                return `
+                    <div class="min-h-screen bg-gray-50 flex-col" style="justify-content: center;">
+                        <div class="bg-white rounded-lg shadow-md p-8 max-w-md w-full">
+                            <h2 class="text-2xl font-bold text-gray-900 mb-6">Admin Login</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                    <input type="email" id="admin-email" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="admin@eggs.com">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                    <input type="password" id="admin-password" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="admin123">
+                                </div>
+                                <button class="btn-admin-submit w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600">
+                                    Login
+                                </button>
+                                <button class="btn-admin-back w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300">
+                                    Back
+                                </button>
+                            </div>
+                            <p class="mt-4 text-sm text-gray-500 text-center">
+                                Demo: admin@eggs.com / admin123
+                            </p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderAdminDashboard() {
+                const activeTab = window.adminActiveTab || 'products';
+                const pendingOrdersCount = this.orders.filter(o => o.status === 'pending').length;
+
+                let content = '';
+
+                if (activeTab === 'products') {
+                    content = `
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <h2 class="text-xl font-bold mb-4">Manage Products</h2>
+                            <div class="space-y-4">
+                                ${this.products.map(product => `
+                                    <div class="border rounded-lg p-4">
+                                        ${this.editingProduct === product.id ? `
+                                            <div class="space-y-3">
+                                                <div class="grid grid-cols-2" style="gap: 1rem;">
+                                                    <div>
+                                                        <label class="block text-sm font-medium mb-1">Price</label>
+                                                        <input type="number" step="0.01" id="price-${product.id}" class="w-full border rounded px-3 py-2" value="${product.price}">
+                                                    </div>
+                                                    <div>
+                                                        <label class="block text-sm font-medium mb-1">Stock</label>
+                                                        <input type="number" id="stock-${product.id}" class="w-full border rounded px-3 py-2" value="${product.stock}">
+                                                    </div>
+                                                </div>
+                                                <div class="flex gap-2">
+                                                    <button class="btn-save-product bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" data-product-id="${product.id}">
+                                                        Save
+                                                    </button>
+                                                    <button class="btn-cancel-edit bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">
+                                                        Cancel
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ` : `
+                                            <div class="flex justify-between items-center">
+                                                <div>
+                                                    <h3 class="font-bold text-lg">${product.name}</h3>
+                                                    <p class="text-gray-600">
+                                                        Price: $${product.price.toFixed(2)} | Stock: ${product.stock} | ${product.eggs} eggs ($${(product.price / product.eggs).toFixed(3)}/egg)
+                                                    </p>
+                                                </div>
+                                                <button class="btn-edit-product flex items-center gap-2 bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600" data-product-id="${product.id}">
+                                                    ✏️ Edit
+                                                </button>
+                                            </div>
+                                        `}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                } else if (activeTab === 'orders') {
+                    content = `
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <h2 class="text-xl font-bold mb-4">Orders</h2>
+                            ${this.orders.length === 0 ? `
+                                <p class="text-gray-600">No orders yet</p>
+                            ` : `
+                                <div class="space-y-4">
+                                    ${this.orders.map(order => `
+                                        <div class="border rounded-lg p-4">
+                                            <div class="flex justify-between items-start mb-2">
+                                                <div>
+                                                    <p class="font-bold">Order #${order.id}</p>
+                                                    <p class="text-sm text-gray-600">${order.date}</p>
+                                                    <p class="text-sm text-gray-600">${order.customer.name} - ${order.customer.phone}</p>
+                                                    <p class="text-sm text-gray-600">${order.customer.address}</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="font-bold text-lg">$${order.total}</p>
+                                                    <span style="display: inline-block; font-size: 0.875rem; padding: 0.25rem 0.75rem; border-radius: 9999px; ${order.status === 'completed' ? 'background-color: #dcfce7; color: #15803d;' : 'background-color: #fef08a; color: #ca8a04;'}">
+                                                        ${order.status}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 text-sm text-gray-600">
+                                                ${order.items.map(item => `<div>• ${item.name} × ${item.quantity}</div>`).join('')}
+                                            </div>
+                                            ${order.status === 'pending' ? `
+                                                <button class="btn-complete-order mt-3 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" data-order-id="${order.id}">
+                                                    Mark as Completed
+                                                </button>
+                                            ` : ''}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            `}
+                        </div>
+                    `;
+                } else if (activeTab === 'settings') {
+                    const crateProduct = this.products.find(p => p.id === 3);
+                    content = `
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <h2 class="text-xl font-bold mb-4">Settings</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Crate Size (eggs per crate)
+                                    </label>
+                                    <select id="crate-size" class="border border-gray-300 rounded-lg px-4 py-2">
+                                        <option value="30" ${this.crateSize === 30 ? 'selected' : ''}>30 eggs</option>
+                                        <option value="36" ${this.crateSize === 36 ? 'selected' : ''}>36 eggs</option>
+                                    </select>
+                                    <p class="text-sm text-gray-500 mt-1">
+                                        Current crate contains ${this.crateSize} eggs at $${crateProduct ? crateProduct.price.toFixed(2) : '0.00'}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div class="bg-gray-50" style="min-height: 100vh;">
+                        <nav class="nav-orange">
+                            <h1 class="text-2xl font-bold">🟡 Admin Dashboard</h1>
+                            <button class="btn-logout flex items-center gap-2 bg-orange-700 text-white px-4 py-2 rounded-lg hover:bg-orange-800" style="background-color: #c2410c;">
+                                🚪 Logout
+                            </button>
+                        </nav>
+
+                        <div class="container max-w-6xl" style="padding: 2rem;">
+                            <div class="flex gap-4 mb-6 flex-wrap">
+                                <button class="btn-tab-products flex items-center gap-2 px-4 py-2 rounded-lg ${activeTab === 'products' ? 'bg-orange-500 text-white' : 'bg-white text-gray-700'}" data-tab="products">
+                                    📦 Products
+                                </button>
+                                <button class="btn-tab-orders flex items-center gap-2 px-4 py-2 rounded-lg ${activeTab === 'orders' ? 'bg-orange-500 text-white' : 'bg-white text-gray-700'}" data-tab="orders">
+                                    🛒 Orders (${pendingOrdersCount})
+                                </button>
+                                <button class="btn-tab-settings flex items-center gap-2 px-4 py-2 rounded-lg ${activeTab === 'settings' ? 'bg-orange-500 text-white' : 'bg-white text-gray-700'}" data-tab="settings">
+                                    ⚙️ Settings
+                                </button>
+                            </div>
+
+                            ${content}
+                        </div>
+                    </div>
+                `;
+            }
+
+            attachEventListeners() {
+                // Home page
+                const shopBtn = document.querySelector('.btn-shop-now');
+                if (shopBtn) shopBtn.addEventListener('click', () => this.setPage('shop'));
+
+                const adminLoginBtn = document.querySelector('.btn-admin-login');
+                if (adminLoginBtn) adminLoginBtn.addEventListener('click', () => this.setPage('admin-login'));
+
+                // Shop page
+                const homeBtn = document.querySelector('.btn-home');
+                if (homeBtn) homeBtn.addEventListener('click', () => this.setPage('shop'));
+
+                const cartViewBtn = document.querySelector('.btn-cart-view');
+                if (cartViewBtn) cartViewBtn.addEventListener('click', () => this.setPage('cart'));
+
+                const addToCartBtns = document.querySelectorAll('.btn-add-to-cart');
+                addToCartBtns.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const productId = parseInt(e.target.dataset.productId);
+                        const product = this.products.find(p => p.id === productId);
+                        if (product && product.stock > 0) {
+                            this.addToCart(product);
+                        }
+                    });
+                });
+
+                // Cart page
+                const continueShopBtn = document.querySelector('.btn-continue-shop');
+                if (continueShopBtn) continueShopBtn.addEventListener('click', () => this.setPage('shop'));
+
+                const startShopBtn = document.querySelector('.btn-start-shop');
+                if (startShopBtn) startShopBtn.addEventListener('click', () => this.setPage('shop'));
+
+                const qtyDecBtns = document.querySelectorAll('.btn-qty-dec');
+                qtyDecBtns.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const itemId = parseInt(e.target.dataset.itemId);
+                        const item = this.cart.find(i => i.id === itemId);
+                        if (item) this.updateCartQuantity(itemId, item.quantity - 1);
+                    });
+                });
+
+                const qtyIncBtns = document.querySelectorAll('.btn-qty-inc');
+                qtyIncBtns.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const itemId = parseInt(e.target.dataset.itemId);
+                        const item = this.cart.find(i => i.id === itemId);
+                        if (item) this.updateCartQuantity(itemId, item.quantity + 1);
+                    });
+                });
+
+                const removeBtns = document.querySelectorAll('.btn-remove');
+                removeBtns.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const itemId = parseInt(e.target.dataset.itemId);
+                        this.removeFromCart(itemId);
+                    });
+                });
+
+                const checkoutBtn = document.querySelector('.btn-checkout');
+                if (checkoutBtn) checkoutBtn.addEventListener('click', () => this.setPage('checkout'));
+
+                // Checkout page
+                const customerNameInput = document.getElementById('customer-name');
+                if (customerNameInput) {
+                    customerNameInput.addEventListener('input', (e) => {
+                        this.customerInfo.name = e.target.value;
+                        e.target.style.borderColor = e.target.value ? '#22c55e' : '#d1d5db';
+                    });
+                }
+
+                const customerPhoneInput = document.getElementById('customer-phone');
+                if (customerPhoneInput) {
+                    customerPhoneInput.addEventListener('input', (e) => {
+                        this.customerInfo.phone = e.target.value;
+                        const isValid = /^\d{0,}$|^\d{3}-?\d{3}-?\d{4}$/.test(e.target.value.replace(/\D/g, ''));
+                        e.target.style.borderColor = isValid || !e.target.value ? '#22c55e' : '#ef4444';
+                    });
+                }
+
+                const customerAddressInput = document.getElementById('customer-address');
+                if (customerAddressInput) {
+                    customerAddressInput.addEventListener('input', (e) => {
+                        this.customerInfo.address = e.target.value;
+                        e.target.style.borderColor = e.target.value ? '#22c55e' : '#d1d5db';
+                    });
+                }
+
+                const customerPaymentSelect = document.getElementById('customer-payment');
+                if (customerPaymentSelect) {
+                    customerPaymentSelect.addEventListener('change', (e) => {
+                        this.customerInfo.payment = e.target.value;
+                    });
+                }
+
+                const confirmBtn = document.querySelector('.btn-confirm');
+                if (confirmBtn) {
+                    confirmBtn.addEventListener('click', (e) => {
+                        e.target.innerHTML = '⏳ Processing...';
+                        e.target.disabled = true;
+                        setTimeout(() => {
+                            this.handleCheckout();
+                        }, 500);
+                    });
+                }
+
+                const backCartBtn = document.querySelector('.btn-back-cart');
+                if (backCartBtn) backCartBtn.addEventListener('click', () => this.setPage('cart'));
+
+                // Success page
+                const backHomeBtn = document.querySelector('.btn-back-home');
+                if (backHomeBtn) backHomeBtn.addEventListener('click', () => this.setPage('home'));
+
+                // Admin Login
+                const adminEmailInput = document.getElementById('admin-email');
+                if (adminEmailInput) {
+                    adminEmailInput.addEventListener('change', (e) => {
+                        this.adminEmail = e.target.value;
+                    });
+                }
+
+                const adminPasswordInput = document.getElementById('admin-password');
+                if (adminPasswordInput) {
+                    adminPasswordInput.addEventListener('change', (e) => {
+                        this.adminPassword = e.target.value;
+                    });
+                }
+
+                const adminSubmitBtn = document.querySelector('.btn-admin-submit');
+                if (adminSubmitBtn) adminSubmitBtn.addEventListener('click', () => this.handleAdminLogin());
+
+                const adminBackBtn = document.querySelector('.btn-admin-back');
+                if (adminBackBtn) adminBackBtn.addEventListener('click', () => this.setPage('home'));
+
+                // Admin Dashboard
+                const logoutBtn = document.querySelector('.btn-logout');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', () => {
+                        this.isAdmin = false;
+                        this.setPage('home');
+                    });
+                }
+
+                const tabBtns = document.querySelectorAll('[class^="btn-tab-"]');
+                tabBtns.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const tab = e.target.dataset.tab;
+                        window.adminActiveTab = tab;
+                        this.render();
+                    });
+                });
+
+                const editProductBtns = document.querySelectorAll('.btn-edit-product');
+                editProductBtns.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const productId = parseInt(e.target.closest('button').dataset.productId);
+                        this.editingProduct = productId;
+                        this.render();
+                    });
+                });
+
+                const saveProductBtns = document.querySelectorAll('.btn-save-product');
+                saveProductBtns.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const productId = parseInt(e.target.dataset.productId);
+                        const price = parseFloat(document.getElementById(`price-${productId}`).value);
+                        const stock = parseInt(document.getElementById(`stock-${productId}`).value);
+                        this.updateProduct(productId, { price, stock });
+                    });
+                });
+
+                const cancelEditBtn = document.querySelector('.btn-cancel-edit');
+                if (cancelEditBtn) {
+                    cancelEditBtn.addEventListener('click', () => {
+                        this.editingProduct = null;
+                        this.render();
+                    });
+                }
+
+                const completeOrderBtns = document.querySelectorAll('.btn-complete-order');
+                completeOrderBtns.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const orderId = parseInt(e.target.dataset.orderId);
+                        this.markOrderComplete(orderId);
+                    });
+                });
+
+                const crateSizeSelect = document.getElementById('crate-size');
+                if (crateSizeSelect) {
+                    crateSizeSelect.addEventListener('change', (e) => {
+                        this.setCrateSize(parseInt(e.target.value));
+                    });
+                }
+            }
+        }
+
+        // Initialize app
+        const app = new EggStore();
+    </script>
+</body>
+</html>
