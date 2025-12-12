@@ -801,6 +801,187 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
+        /* Chatbot styling */
+        .chatbot-container {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 999;
+            font-family: inherit;
+        }
+
+        .chatbot-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.6);
+        }
+
+        .chatbot-window {
+            position: absolute;
+            bottom: 80px;
+            left: 0;
+            width: 400px;
+            height: 600px;
+            background: var(--card-bg);
+            border-radius: 1rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            animation: slideInUp 0.3s ease-out;
+            overflow: hidden;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: white;
+            padding: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .chatbot-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .chatbot-language-selector {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+        }
+
+        .chatbot-lang-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border: 2px solid var(--border-color);
+            background: var(--card-bg);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-lang-btn.active {
+            border-color: #f97316;
+            color: #f97316;
+            background: rgba(249, 115, 22, 0.1);
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chatbot-message {
+            display: flex;
+            animation: slideInUp 0.3s ease-out;
+        }
+
+        .chatbot-message.bot {
+            justify-content: flex-start;
+        }
+
+        .chatbot-message.user {
+            justify-content: flex-end;
+        }
+
+        .chatbot-message-content {
+            max-width: 80%;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            word-wrap: break-word;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+
+        .chatbot-message.bot .chatbot-message-content {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border-radius: 0 0.75rem 0.75rem 0.75rem;
+        }
+
+        .chatbot-message.user .chatbot-message-content {
+            background: #f97316;
+            color: white;
+            border-radius: 0.75rem 0 0.75rem 0.75rem;
+        }
+
+        .chatbot-suggestions {
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .chatbot-suggestion-btn {
+            padding: 0.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            text-align: left;
+            color: var(--text-primary);
+        }
+
+        .chatbot-suggestion-btn:hover {
+            background: rgba(249, 115, 22, 0.1);
+            border-color: #f97316;
+            color: #f97316;
+        }
+
+        @media (max-width: 768px) {
+            .chatbot-window {
+                width: 100%;
+                height: 70vh;
+                max-width: calc(100% - 2rem);
+                bottom: 80px;
+                left: 1rem;
+                right: 1rem;
+            }
+        }
+
         /* Form styling */
         .form-group {
             animation: slideInUp 0.3s ease-out;
@@ -905,6 +1086,119 @@
 
             static clear() {
                 localStorage.clear();
+            }
+        }
+
+        // Chatbot for Customer Assistance
+        class Chatbot {
+            constructor() {
+                this.isOpen = false;
+                this.language = 'en'; // 'en' or 'sn'
+                this.messages = [];
+                this.faqData = {
+                    en: {
+                        greeting: "Hello! 👋 I'm here to help with your egg orders. How can I assist you?",
+                        questions: [
+                            { q: "How much do eggs cost?", a: "Our eggs are priced based on quantity: 6 eggs for $5, 12 eggs for $9, and 24 eggs for $16." },
+                            { q: "Do you deliver?", a: "Yes! We deliver fresh eggs to your location. Check our shop for delivery details." },
+                            { q: "Are eggs organic?", a: "Yes, all our eggs are from farm-fresh, naturally raised chickens with no artificial additives." },
+                            { q: "How do I place an order?", a: "Click 'Shop Now' to browse our products, add items to your cart, and proceed to checkout." },
+                            { q: "What's your return policy?", a: "We guarantee fresh eggs on arrival. Contact us within 24 hours if there's any issue." },
+                            { q: "Can I cancel my order?", a: "You can cancel orders before processing. Contact our admin for assistance." },
+                            { q: "How long do eggs last?", a: "Refrigerated eggs stay fresh for up to 3-4 weeks from purchase." }
+                        ]
+                    },
+                    sn: {
+                        greeting: "Howzit! 👋 Ndirikutempereza nezve maorder ako eegg. Ndingakubatsire sei?",
+                        questions: [
+                            { q: "Zvingani maega?", a: "Maega aru anogururanidza nenzira yakasiyana: 6 eggs $5, 12 eggs $9, 24 eggs $16." },
+                            { q: "Munoreki?", a: "Hongu! Tinoreki maega akasanana kunzvimbo dzako. Tora zvishanda zakudenga mukushop." },
+                            { q: "Maega angu anosanana here?", a: "Hongu, maega ose anu anobva kufarm achinetseka pamwe nokusirikirira kusanana." },
+                            { q: "Ndinoranga order sei?", a: "Dzvanya 'Shop Now' kuona maproducts, wedzira ku basket, ugo kupinda checkout." },
+                            { q: "Chii chakahuswa neyunreturning?", a: "Tinovimbiswa maega akasanana. Hukutarisa zvegama rimwe kana paine dambudziko." },
+                            { q: "Ndinganikisira order yangu here?", a: "Unogona kunzikirira maorder asati achibva. Kumba admin yataura." },
+                            { q: "Maega anozvigara nguva yeipi?", a: "Maega akachigawa muMfritshiza anosungira 3-4 evhu shure pakunzwa." }
+                        ]
+                    }
+                };
+                this.init();
+            }
+
+            init() {
+                this.addMessage('bot', this.faqData[this.language].greeting);
+            }
+
+            addMessage(sender, content) {
+                this.messages.push({ sender, content });
+                this.render();
+            }
+
+            switchLanguage(lang) {
+                this.language = lang;
+                this.messages = [];
+                this.addMessage('bot', this.faqData[lang].greeting);
+            }
+
+            getQuestions() {
+                return this.faqData[this.language].questions;
+            }
+
+            answerQuestion(questionText) {
+                const questions = this.getQuestions();
+                const found = questions.find(item => item.q === questionText);
+                if (found) {
+                    this.addMessage('user', found.q);
+                    setTimeout(() => {
+                        this.addMessage('bot', found.a);
+                    }, 500);
+                }
+            }
+
+            toggle() {
+                this.isOpen = !this.isOpen;
+                this.render();
+            }
+
+            render() {
+                let container = document.querySelector('.chatbot-container');
+                if (!container) {
+                    container = document.createElement('div');
+                    container.className = 'chatbot-container';
+                    document.body.appendChild(container);
+                }
+
+                const questions = this.getQuestions();
+                const suggestionBtns = questions.map(q => `
+                    <button class="chatbot-suggestion-btn" onclick="chatbot.answerQuestion('${q.q.replace(/'/g, "\\'")}')">
+                        ${q.q}
+                    </button>
+                `).join('');
+
+                container.innerHTML = `
+                    <button class="chatbot-button" onclick="chatbot.toggle()">💬</button>
+                    ${this.isOpen ? `
+                        <div class="chatbot-window">
+                            <div class="chatbot-header">
+                                <span>Farm Fresh Eggs Assistant</span>
+                                <button class="chatbot-close" onclick="chatbot.toggle()">✕</button>
+                            </div>
+                            <div class="chatbot-language-selector">
+                                <button class="chatbot-lang-btn ${this.language === 'en' ? 'active' : ''}" onclick="chatbot.switchLanguage('en')">English</button>
+                                <button class="chatbot-lang-btn ${this.language === 'sn' ? 'active' : ''}" onclick="chatbot.switchLanguage('sn')">Shona</button>
+                            </div>
+                            <div class="chatbot-messages">
+                                ${this.messages.map(msg => `
+                                    <div class="chatbot-message ${msg.sender}">
+                                        <div class="chatbot-message-content">${msg.content}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="chatbot-suggestions">
+                                ${suggestionBtns}
+                            </div>
+                        </div>
+                    ` : ''}
+                `;
             }
         }
 
@@ -1166,7 +1460,7 @@
                         <div style="position: absolute; bottom: -100px; left: -100px; width: 400px; height: 400px; background: rgba(255, 255, 255, 0.05); border-radius: 50%; filter: blur(60px); animation: float 8s ease-in-out infinite reverse;"></div>
                         
                         <div class="text-center" style="position: relative; z-index: 10;">
-                            <img src="nest.jpg" alt="Nest Logo" style="width: 120px; height: 120px; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)); margin-bottom: 1rem; animation: bounce 3s ease-in-out infinite;">
+                            <img src="nest.jpg" alt="Nest Logo" class="logo-home">
                             <h1 class="text-6xl font-bold text-white mb-4" style="text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3); letter-spacing: -1px;">Farm Fresh Eggs</h1>
                             <p class="text-2xl text-white mb-8" style="text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3); font-weight: 500;">Affordable, uniform-size eggs delivered fresh</p>
                             <button class="btn-shop-now text-white px-8 py-4 rounded-lg text-xl font-bold hover:bg-orange-600 transition" style="background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%); color: #c2410c; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); letter-spacing: 0.5px;">
@@ -1193,7 +1487,7 @@
                     <div class="bg-gray-50" style="min-height: 100vh;">
                         <nav class="shadow-sm">
                             <div style="display: flex; align-items: center; gap: 0.75rem;">
-                                <img src="nest.jpg" alt="Nest Logo" style="width: 35px; height: 35px; object-fit: contain;">
+                                <img src="nest.jpg" alt="Nest Logo" class="logo-nav">
                                 <h1 class="text-2xl font-bold text-orange-900">Farm Fresh Eggs</h1>
                             </div>
                             <div class="flex gap-4">
@@ -1241,7 +1535,7 @@
                     <div class="bg-gray-50" style="min-height: 100vh;">
                         <nav class="shadow-sm">
                             <div style="display: flex; align-items: center; gap: 0.75rem;">
-                                <img src="nest.jpg" alt="Nest Logo" style="width: 35px; height: 35px; object-fit: contain;">
+                                <img src="nest.jpg" alt="Nest Logo" class="logo-nav">
                                 <h1 class="text-2xl font-bold text-orange-900">Shopping Cart</h1>
                             </div>
                             <div class="flex gap-4">
@@ -1308,7 +1602,7 @@
                     <div class="bg-gray-50" style="min-height: 100vh;">
                         <nav class="shadow-sm">
                             <div style="display: flex; align-items: center; gap: 0.75rem;">
-                                <img src="nest.jpg" alt="Nest Logo" style="width: 35px; height: 35px; object-fit: contain;">
+                                <img src="nest.jpg" alt="Nest Logo" class="logo-nav">
                                 <h1 class="text-2xl font-bold text-orange-900">Checkout</h1>
                             </div>
                             <button class="theme-toggle" title="Toggle dark mode">
@@ -1457,7 +1751,7 @@
                     <div class="bg-gray-50" style="min-height: 100vh;">
                         <nav class="shadow-sm">
                             <div style="display: flex; align-items: center; gap: 0.75rem;">
-                                <img src="nest.jpg" alt="Nest Logo" style="width: 35px; height: 35px; object-fit: contain;">
+                                <img src="nest.jpg" alt="Nest Logo" class="logo-nav">
                                 <h1 class="text-2xl font-bold text-orange-900">⭐ Customer Reviews</h1>
                             </div>
                             <div class="flex gap-4">
@@ -1660,7 +1954,7 @@
                     <div class="bg-gray-50" style="min-height: 100vh;">
                         <nav class="nav-orange">
                             <div style="display: flex; align-items: center; gap: 0.75rem;">
-                                <img src="nest.jpg" alt="Nest Logo" style="width: 35px; height: 35px; object-fit: contain; opacity: 0.9;">
+                                <img src="nest.jpg" alt="Nest Logo" class="logo-admin">
                                 <h1 class="text-2xl font-bold">Admin Dashboard</h1>
                             </div>
                             <button class="btn-logout flex items-center gap-2 bg-orange-700 text-white px-4 py-2 rounded-lg hover:bg-orange-800" style="background-color: #c2410c;">
@@ -1958,6 +2252,9 @@
 
         // Initialize theme manager first
         const themeManager = new ThemeManager();
+
+        // Initialize chatbot
+        const chatbot = new Chatbot();
 
         // Initialize app
         const app = new EggStore();
