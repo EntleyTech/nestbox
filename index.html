@@ -5,6 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Farm Fresh Eggs Store</title>
     <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --bg-tertiary: #f3f4f6;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --text-tertiary: #9ca3af;
+            --border-color: #d1d5db;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --nav-bg: #ffffff;
+            --nav-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --card-bg: #ffffff;
+            --input-border: #d1d5db;
+            --input-focus-shadow: rgba(249, 115, 22, 0.1);
+            --best-value-bg: #22c55e;
+            --error-bg: #ef4444;
+            --warning-bg: #f59e0b;
+            --success-bg: #22c55e;
+        }
+
+        html.dark-mode {
+            --bg-primary: #1f2937;
+            --bg-secondary: #111827;
+            --bg-tertiary: #0f172a;
+            --text-primary: #f3f4f6;
+            --text-secondary: #d1d5db;
+            --text-tertiary: #9ca3af;
+            --border-color: #374151;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --nav-bg: #111827;
+            --nav-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --card-bg: #1f2937;
+            --input-border: #374151;
+            --input-focus-shadow: rgba(249, 115, 22, 0.2);
+            --best-value-bg: #16a34a;
+            --error-bg: #dc2626;
+            --warning-bg: #d97706;
+            --success-bg: #16a34a;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,8 +54,12 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-weight: 400;
+            letter-spacing: 0.3px;
         }
 
         @keyframes slideInUp {
@@ -56,6 +100,24 @@
             }
         }
 
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
         #app {
             animation: fadeIn 0.3s ease-in-out;
         }
@@ -91,11 +153,11 @@
         }
 
         .bg-gray-50 {
-            background-color: #f9fafb;
+            background-color: var(--bg-secondary);
         }
 
         .bg-white {
-            background-color: #ffffff;
+            background-color: var(--card-bg);
         }
 
         .bg-orange-500 {
@@ -115,7 +177,7 @@
         }
 
         .bg-green-500 {
-            background-color: #22c55e;
+            background-color: var(--success-bg);
         }
 
         .bg-green-600 {
@@ -131,7 +193,7 @@
         }
 
         .bg-gray-200 {
-            background-color: #e5e7eb;
+            background-color: var(--bg-tertiary);
         }
 
         .bg-gray-300 {
@@ -143,15 +205,15 @@
         }
 
         .text-gray-600 {
-            color: #4b5563;
+            color: var(--text-secondary);
         }
 
         .text-gray-700 {
-            color: #374151;
+            color: var(--text-secondary);
         }
 
         .text-gray-900 {
-            color: #111827;
+            color: var(--text-primary);
         }
 
         .text-orange-600 {
@@ -184,22 +246,26 @@
 
         .text-2xl {
             font-size: 1.5rem;
-            font-weight: bold;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
         .text-3xl {
             font-size: 1.875rem;
-            font-weight: bold;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
         .text-4xl {
             font-size: 2.25rem;
-            font-weight: bold;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
         .text-6xl {
             font-size: 3.75rem;
-            font-weight: bold;
+            font-weight: 800;
+            letter-spacing: -1px;
         }
 
         .text-8xl {
@@ -212,11 +278,12 @@
 
         .text-xl {
             font-size: 1.25rem;
-            font-weight: bold;
+            font-weight: 700;
         }
 
         .text-sm {
             font-size: 0.875rem;
+            letter-spacing: 0.3px;
         }
 
         .font-bold {
@@ -374,19 +441,19 @@
         }
 
         .border {
-            border: 1px solid #d1d5db;
+            border: 1px solid var(--border-color);
         }
 
         .border-b {
-            border-bottom: 1px solid #d1d5db;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .border-gray-300 {
-            border-color: #d1d5db;
+            border-color: var(--border-color);
         }
 
         .border-t {
-            border-top: 1px solid #d1d5db;
+            border-top: 1px solid var(--border-color);
         }
 
         .last\:border-b-0:last-child {
@@ -398,13 +465,16 @@
             border: none;
             transition: all 0.3s ease;
             font-family: inherit;
-            font-weight: 500;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
         }
 
         button:hover:not(:disabled) {
-            opacity: 0.9;
+            opacity: 0.95;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         }
 
         button:active:not(:disabled) {
@@ -413,26 +483,30 @@
 
         button:disabled {
             cursor: not-allowed;
-            opacity: 0.6;
+            opacity: 0.5;
         }
 
         input, textarea, select {
             font-family: inherit;
-            border: 2px solid #d1d5db;
-            border-radius: 0.5rem;
-            padding: 0.75rem 0.75rem;
+            border: 2px solid var(--input-border);
+            border-radius: 0.75rem;
+            padding: 0.875rem 1rem;
             width: 100%;
             transition: all 0.3s ease;
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            font-size: 1rem;
         }
 
         input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: #f97316;
-            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+            box-shadow: 0 0 0 4px var(--input-focus-shadow);
+            transform: scale(1.01);
         }
 
         input::placeholder, textarea::placeholder {
-            color: #9ca3af;
+            color: var(--text-tertiary);
         }
 
         input:valid {
@@ -465,13 +539,14 @@
         }
 
         nav {
-            background-color: #ffffff;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            padding: 1rem;
+            background-color: var(--nav-bg);
+            box-shadow: var(--nav-shadow);
+            padding: 1.25rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             animation: slideInUp 0.3s ease-out;
+            border-bottom: 3px solid transparent;
         }
 
         nav button {
@@ -481,15 +556,35 @@
         nav button:hover {
             transform: none;
             box-shadow: none;
+            color: #f97316;
         }
 
         .nav-orange {
-            background-color: #ea580c;
+            background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
             color: white;
+            border-bottom-color: #c2410c;
         }
 
         .nav-orange h1 {
             animation: bounce 2s ease-in-out infinite;
+            font-size: 1.75rem;
+            letter-spacing: 0.5px;
+        }
+
+        .theme-toggle {
+            background: rgba(249, 115, 22, 0.1);
+            padding: 0.5rem 0.75rem;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+            border-radius: 0.5rem;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(249, 115, 22, 0.2);
+            transform: rotate(20deg) scale(1.1);
+            box-shadow: none;
         }
 
         .space-y-2 > * + * {
@@ -588,22 +683,26 @@
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            background-color: #22c55e;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
             color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 1.25rem 1.75rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 8px 24px rgba(34, 197, 94, 0.3);
             animation: slideInUp 0.3s ease-out;
             z-index: 1000;
-            max-width: 300px;
+            max-width: 350px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
         }
 
         .toast.error {
-            background-color: #ef4444;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            box-shadow: 0 8px 24px rgba(239, 68, 68, 0.3);
         }
 
         .toast.warning {
-            background-color: #f59e0b;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
         }
 
         /* Loading spinner */
@@ -624,12 +723,15 @@
 
         /* Product card hover effect */
         .product-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            border: 1px solid transparent;
+            background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-bg) 100%);
         }
 
         .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            transform: translateY(-12px);
+            box-shadow: 0 20px 40px rgba(249, 115, 22, 0.15);
+            border-color: #f97316;
         }
 
         /* Best value badge animation */
@@ -637,25 +739,31 @@
             animation: bounce 2s ease-in-out infinite;
         }
 
-        /* Form validation */
+        /* Cart item animation */
+        .cart-item {
+            animation: slideInUp 0.3s ease-out;
+            transition: all 0.3s ease;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            border-left: 4px solid #f97316;
+        }
+
+        .cart-item:hover {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form styling */
         .form-group {
             animation: slideInUp 0.3s ease-out;
+            margin-bottom: 1.5rem;
         }
 
         .error-message {
             color: #ef4444;
             font-size: 0.875rem;
-            margin-top: 0.25rem;
-        }
-
-        /* Cart item animation */
-        .cart-item {
-            animation: slideInUp 0.3s ease-out;
-        }
-
-        .cart-item:hover {
-            background-color: #f9fafb;
-            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -675,6 +783,60 @@
                     toast.style.animation = 'slideInUp 0.3s ease-out reverse';
                     setTimeout(() => toast.remove(), 300);
                 }, duration);
+            }
+        }
+
+        // Theme Manager
+        class ThemeManager {
+            constructor() {
+                this.THEME_KEY = 'theme-preference';
+                this.init();
+            }
+
+            init() {
+                const savedTheme = Storage.get(this.THEME_KEY);
+                if (savedTheme) {
+                    this.setTheme(savedTheme);
+                } else {
+                    this.detectSystemTheme();
+                }
+            }
+
+            detectSystemTheme() {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    this.setTheme('dark');
+                } else {
+                    this.setTheme('light');
+                }
+                this.watchSystemTheme();
+            }
+
+            watchSystemTheme() {
+                if (!window.matchMedia) return;
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                    const savedTheme = Storage.get(this.THEME_KEY);
+                    if (!savedTheme) {
+                        this.setTheme(e.matches ? 'dark' : 'light');
+                    }
+                });
+            }
+
+            setTheme(theme) {
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark-mode');
+                } else {
+                    document.documentElement.classList.remove('dark-mode');
+                }
+                Storage.set(this.THEME_KEY, theme);
+            }
+
+            toggle() {
+                const isDark = document.documentElement.classList.contains('dark-mode');
+                this.setTheme(isDark ? 'light' : 'dark');
+            }
+
+            isDark() {
+                return document.documentElement.classList.contains('dark-mode');
             }
         }
 
@@ -710,6 +872,7 @@
                 this.currentPage = 'home';
                 this.cart = Storage.get('cart') || [];
                 this.orders = Storage.get('orders') || [];
+                this.reviews = Storage.get('reviews') || [];
                 this.isAdmin = false;
                 this.crateSize = 36;
                 this.editingProduct = null;
@@ -723,6 +886,8 @@
                     address: '',
                     payment: 'cash'
                 };
+
+                this.isDarkMode = document.documentElement.classList.contains('dark-mode');
 
                 this.render();
             }
@@ -861,6 +1026,43 @@
                 this.render();
             }
 
+            addReview(orderId, rating, comment) {
+                const order = this.orders.find(o => o.id === orderId);
+                if (!order) {
+                    Toast.show('Order not found', 'error');
+                    return;
+                }
+
+                const existingReview = this.reviews.find(r => r.orderId === orderId);
+                if (existingReview) {
+                    existingReview.rating = rating;
+                    existingReview.comment = comment;
+                    existingReview.date = new Date().toLocaleString();
+                } else {
+                    this.reviews.push({
+                        orderId,
+                        rating,
+                        comment,
+                        customerName: order.customer.name,
+                        date: new Date().toLocaleString()
+                    });
+                }
+
+                Storage.set('reviews', this.reviews);
+                Toast.show('Thank you for your review!', 'success');
+                this.render();
+            }
+
+            getOrderReview(orderId) {
+                return this.reviews.find(r => r.orderId === orderId);
+            }
+
+            getAverageRating() {
+                if (this.reviews.length === 0) return 0;
+                const sum = this.reviews.reduce((acc, r) => acc + r.rating, 0);
+                return (sum / this.reviews.length).toFixed(1);
+            }
+
             setCrateSize(size) {
                 this.crateSize = size;
                 const crateProduct = this.products.find(p => p.id === 3);
@@ -890,6 +1092,8 @@
                     app.innerHTML = this.renderCheckout();
                 } else if (this.currentPage === 'success') {
                     app.innerHTML = this.renderSuccess();
+                } else if (this.currentPage === 'reviews') {
+                    app.innerHTML = this.renderReviews();
                 } else if (this.currentPage === 'admin-login') {
                     app.innerHTML = this.renderAdminLogin();
                 } else if (this.currentPage === 'admin') {
@@ -901,17 +1105,35 @@
 
             renderHome() {
                 return `
-                    <div class="min-h-screen bg-gradient flex-col">
-                        <div class="text-center">
-                            <div class="text-8xl mb-8">🟡</div>
-                            <h1 class="text-6xl font-bold text-orange-900 mb-4">Farm Fresh Eggs</h1>
-                            <p class="text-2xl text-orange-700 mb-8">Affordable, uniform-size eggs delivered fresh</p>
-                            <button class="btn-shop-now bg-orange-500 text-white px-8 py-4 rounded-lg text-xl font-semibold hover:bg-orange-600 transition">
-                                Shop Now
+                    <div class="min-h-screen flex-col" style="
+                        background: linear-gradient(135deg, rgba(249, 115, 22, 0.85) 0%, rgba(217, 119, 6, 0.85) 50%, rgba(124, 45, 18, 0.85) 100%), url('home.jpg') center/cover no-repeat;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        position: relative;
+                        overflow: hidden;
+                    ">
+                        <!-- Decorative elements -->
+                        <div style="position: absolute; top: -50px; right: -50px; width: 300px; height: 300px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; filter: blur(40px); animation: float 6s ease-in-out infinite;"></div>
+                        <div style="position: absolute; bottom: -100px; left: -100px; width: 400px; height: 400px; background: rgba(255, 255, 255, 0.05); border-radius: 50%; filter: blur(60px); animation: float 8s ease-in-out infinite reverse;"></div>
+                        
+                        <div class="text-center" style="position: relative; z-index: 10;">
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 1rem;">
+                                <img src="nest.jpg" alt="Nest Logo" style="width: 100px; height: 100px; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));">
+                                <img src="logo.jpg" alt="Farm Fresh Eggs Logo" style="width: 120px; height: 120px; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)); animation: bounce 3s ease-in-out infinite;">
+                            </div>
+                            <h1 class="text-6xl font-bold text-white mb-4" style="text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3); letter-spacing: -1px;">Farm Fresh Eggs</h1>
+                            <p class="text-2xl text-white mb-8" style="text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3); font-weight: 500;">Affordable, uniform-size eggs delivered fresh</p>
+                            <button class="btn-shop-now text-white px-8 py-4 rounded-lg text-xl font-bold hover:bg-orange-600 transition" style="background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%); color: #c2410c; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); letter-spacing: 0.5px;">
+                                🛒 Shop Now
                             </button>
-                            <div class="mt-8">
-                                <button class="btn-admin-login text-orange-600 hover:text-orange-700 text-sm underline" style="background: none; padding: 0;">
-                                    Admin Login
+                            <div class="mt-8 flex gap-4 justify-center">
+                                <button class="btn-view-reviews text-white text-sm underline" style="background: rgba(255, 255, 255, 0.2); padding: 0.5rem 1rem; border-radius: 0.5rem; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); transition: all 0.3s ease;">
+                                    ⭐ View Customer Reviews
+                                </button>
+                                <span style="color: rgba(255, 255, 255, 0.5);">•</span>
+                                <button class="btn-admin-login text-white text-sm underline" style="background: rgba(255, 255, 255, 0.2); padding: 0.5rem 1rem; border-radius: 0.5rem; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); transition: all 0.3s ease;">
+                                    🔐 Admin Login
                                 </button>
                             </div>
                         </div>
@@ -925,10 +1147,17 @@
                 return `
                     <div class="bg-gray-50" style="min-height: 100vh;">
                         <nav class="shadow-sm">
-                            <h1 class="text-2xl font-bold text-orange-900">🟡 Farm Fresh Eggs</h1>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <img src="nest.jpg" alt="Nest Logo" style="width: 35px; height: 35px; object-fit: contain;">
+                                <img src="logo.jpg" alt="Farm Fresh Eggs Logo" style="width: 40px; height: 40px; object-fit: contain;">
+                                <h1 class="text-2xl font-bold text-orange-900">Farm Fresh Eggs</h1>
+                            </div>
                             <div class="flex gap-4">
                                 <button class="btn-home text-gray-600 hover:text-gray-900" style="background: none; padding: 0;">
                                     Home
+                                </button>
+                                <button class="theme-toggle" title="Toggle dark mode">
+                                    ${this.isDarkMode ? '☀️' : '🌙'}
                                 </button>
                                 <button class="btn-cart-view bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 flex">
                                     🛒 Cart (${this.getCartItemCount()})
@@ -967,10 +1196,19 @@
                 return `
                     <div class="bg-gray-50" style="min-height: 100vh;">
                         <nav class="shadow-sm">
-                            <h1 class="text-2xl font-bold text-orange-900">🟡 Shopping Cart</h1>
-                            <button class="btn-continue-shop text-orange-600 hover:text-orange-700" style="background: none; padding: 0;">
-                                Continue Shopping
-                            </button>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <img src="nest.jpg" alt="Nest Logo" style="width: 35px; height: 35px; object-fit: contain;">
+                                <img src="logo.jpg" alt="Farm Fresh Eggs Logo" style="width: 40px; height: 40px; object-fit: contain;">
+                                <h1 class="text-2xl font-bold text-orange-900">Shopping Cart</h1>
+                            </div>
+                            <div class="flex gap-4">
+                                <button class="theme-toggle" title="Toggle dark mode">
+                                    ${this.isDarkMode ? '☀️' : '🌙'}
+                                </button>
+                                <button class="btn-continue-shop text-orange-600 hover:text-orange-700" style="background: none; padding: 0;">
+                                    Continue Shopping
+                                </button>
+                            </div>
                         </nav>
 
                         <div class="container max-w-4xl" style="padding: 2rem;">
@@ -1026,7 +1264,14 @@
                 return `
                     <div class="bg-gray-50" style="min-height: 100vh;">
                         <nav class="shadow-sm">
-                            <h1 class="text-2xl font-bold text-orange-900">🟡 Checkout</h1>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <img src="nest.jpg" alt="Nest Logo" style="width: 35px; height: 35px; object-fit: contain;">
+                                <img src="logo.jpg" alt="Farm Fresh Eggs Logo" style="width: 40px; height: 40px; object-fit: contain;">
+                                <h1 class="text-2xl font-bold text-orange-900">Checkout</h1>
+                            </div>
+                            <button class="theme-toggle" title="Toggle dark mode">
+                                ${this.isDarkMode ? '☀️' : '🌙'}
+                            </button>
                         </nav>
 
                         <div class="container max-w-4xl" style="padding: 2rem;">
@@ -1087,14 +1332,45 @@
             }
 
             renderSuccess() {
+                const lastOrder = this.orders[this.orders.length - 1];
+                const review = lastOrder ? this.getOrderReview(lastOrder.id) : null;
+
                 return `
                     <div class="min-h-screen bg-gray-50 flex-col" style="justify-content: center;">
-                        <div class="bg-white rounded-lg shadow-md p-8 max-w-md text-center">
+                        <div class="bg-white rounded-lg shadow-md p-8 max-w-2xl w-full text-center">
                             <div style="font-size: 4rem; color: #22c55e; margin: 1rem auto; width: fit-content;">✓</div>
                             <h2 class="text-2xl font-bold text-gray-900 mb-2">Order Confirmed!</h2>
-                            <p class="text-gray-600 mb-6">
+                            <p class="text-gray-600 mb-8">
                                 Thank you for your order. We'll deliver your fresh eggs soon!
                             </p>
+
+                            ${lastOrder ? `
+                                <div class="border-t pt-6 mb-6">
+                                    <h3 class="text-xl font-bold text-gray-900 mb-4">Rate Your Experience</h3>
+                                    <div style="background-color: var(--card-bg); padding: 1.5rem; border-radius: 0.5rem;">
+                                        <div class="mb-4">
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Rating</label>
+                                            <div style="display: flex; gap: 0.5rem; justify-content: center;">
+                                                ${[1, 2, 3, 4, 5].map(star => `
+                                                    <button class="rating-star" data-rating="${star}" data-order-id="${lastOrder.id}" style="background: none; font-size: 2rem; cursor: pointer; transition: transform 0.2s; ${review && review.rating >= star ? 'filter: drop-shadow(0 0 3px #fbbf24);' : ''}">
+                                                        ${review && review.rating >= star ? '⭐' : '☆'}
+                                                    </button>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Comment (Optional)</label>
+                                            <textarea id="review-comment" class="w-full border border-gray-300 rounded-lg px-3 py-2" rows="3" placeholder="Share your thoughts about the eggs..." style="background-color: var(--card-bg);">${review ? review.comment : ''}</textarea>
+                                        </div>
+
+                                        <button class="btn-submit-review bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600" data-order-id="${lastOrder.id}">
+                                            Submit Review
+                                        </button>
+                                    </div>
+                                </div>
+                            ` : ''}
+
                             <button class="btn-back-home bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600">
                                 Back to Home
                             </button>
@@ -1127,6 +1403,75 @@
                             <p class="mt-4 text-sm text-gray-500 text-center">
                                 Demo: admin@eggs.com / admin123
                             </p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderReviews() {
+                const avgRating = this.getAverageRating();
+
+                return `
+                    <div class="bg-gray-50" style="min-height: 100vh;">
+                        <nav class="shadow-sm">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <img src="nest.jpg" alt="Nest Logo" style="width: 35px; height: 35px; object-fit: contain;">
+                                <img src="logo.jpg" alt="Farm Fresh Eggs Logo" style="width: 40px; height: 40px; object-fit: contain;">
+                                <h1 class="text-2xl font-bold text-orange-900">⭐ Customer Reviews</h1>
+                            </div>
+                            <div class="flex gap-4">
+                                <button class="theme-toggle" title="Toggle dark mode">
+                                    ${this.isDarkMode ? '☀️' : '🌙'}
+                                </button>
+                                <button class="btn-back-home-reviews text-orange-600 hover:text-orange-700" style="background: none; padding: 0;">
+                                    Back to Home
+                                </button>
+                            </div>
+                        </nav>
+
+                        <div class="container max-w-4xl" style="padding: 2rem;">
+                            <div class="bg-white rounded-lg shadow-md p-8 mb-6" style="background-color: var(--card-bg); text-align: center;">
+                                <h2 class="text-4xl font-bold text-orange-600 mb-2">${avgRating}</h2>
+                                <div style="font-size: 2rem; letter-spacing: 0.25rem;">
+                                    ${Array(Math.round(avgRating)).fill('⭐').join('')}${Array(5 - Math.round(avgRating)).fill('☆').join('')}
+                                </div>
+                                <p class="text-gray-600 mt-4">Based on ${this.reviews.length} customer ${this.reviews.length === 1 ? 'review' : 'reviews'}</p>
+                            </div>
+
+                            ${this.reviews.length === 0 ? `
+                                <div class="bg-white rounded-lg shadow-md p-8 text-center" style="background-color: var(--card-bg);">
+                                    <p class="text-gray-600 text-lg">No reviews yet. Be the first to review!</p>
+                                    <button class="btn-shop-now-reviews bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 mt-4">
+                                        Shop Now
+                                    </button>
+                                </div>
+                            ` : `
+                                <div class="space-y-4">
+                                    ${this.reviews.map((review, index) => {
+                                        const ratingBreakdown = [0, 0, 0, 0, 0];
+                                        ratingBreakdown[review.rating - 1]++;
+                                        
+                                        return `
+                                            <div class="bg-white rounded-lg shadow-md p-6" style="background-color: var(--card-bg);">
+                                                <div class="flex justify-between items-start mb-3">
+                                                    <div>
+                                                        <h3 class="font-bold text-lg text-gray-900">${review.customerName}</h3>
+                                                        <p class="text-sm text-gray-500">${review.date}</p>
+                                                    </div>
+                                                    <div style="font-size: 1.5rem;">
+                                                        ${Array(review.rating).fill('⭐').join('')}${Array(5 - review.rating).fill('☆').join('')}
+                                                    </div>
+                                                </div>
+                                                ${review.comment ? `
+                                                    <p class="text-gray-700">${review.comment}</p>
+                                                ` : `
+                                                    <p class="text-gray-500 italic">No comment provided</p>
+                                                `}
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            `}
                         </div>
                     </div>
                 `;
@@ -1224,10 +1569,11 @@
                     `;
                 } else if (activeTab === 'settings') {
                     const crateProduct = this.products.find(p => p.id === 3);
+                    const avgRating = this.getAverageRating();
                     content = `
                         <div class="bg-white rounded-lg shadow-md p-6">
-                            <h2 class="text-xl font-bold mb-4">Settings</h2>
-                            <div class="space-y-4">
+                            <h2 class="text-xl font-bold mb-4">Settings & Reviews</h2>
+                            <div class="space-y-6">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">
                                         Crate Size (eggs per crate)
@@ -1240,6 +1586,30 @@
                                         Current crate contains ${this.crateSize} eggs at $${crateProduct ? crateProduct.price.toFixed(2) : '0.00'}
                                     </p>
                                 </div>
+
+                                <div class="border-t pt-6" style="border-top: 1px solid var(--border-color);">
+                                    <h3 class="text-lg font-bold mb-4">📊 Customer Reviews</h3>
+                                    <p class="text-sm text-gray-600 mb-2">Average Rating: <span class="font-bold">${avgRating} ⭐</span> (${this.reviews.length} reviews)</p>
+                                    
+                                    ${this.reviews.length > 0 ? `
+                                        <div class="space-y-3 mt-4">
+                                            ${this.reviews.slice(-5).reverse().map(review => `
+                                                <div style="background-color: var(--bg-secondary); padding: 1rem; border-radius: 0.5rem; border-left: 4px solid #f97316;">
+                                                    <div class="flex justify-between items-start mb-1">
+                                                        <span class="font-semibold text-gray-900">${review.customerName}</span>
+                                                        <span class="text-sm text-gray-500">${review.date}</span>
+                                                    </div>
+                                                    <div class="mb-2">
+                                                        ${Array(review.rating).fill('⭐').join('') + Array(5 - review.rating).fill('☆').join('')}
+                                                    </div>
+                                                    <p class="text-sm text-gray-700">${review.comment || '(No comment provided)'}</p>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    ` : `
+                                        <p class="text-sm text-gray-500">No reviews yet</p>
+                                    `}
+                                </div>
                             </div>
                         </div>
                     `;
@@ -1248,7 +1618,11 @@
                 return `
                     <div class="bg-gray-50" style="min-height: 100vh;">
                         <nav class="nav-orange">
-                            <h1 class="text-2xl font-bold">🟡 Admin Dashboard</h1>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <img src="nest.jpg" alt="Nest Logo" style="width: 35px; height: 35px; object-fit: contain; opacity: 0.9;">
+                                <img src="logo.jpg" alt="Farm Fresh Eggs Logo" style="width: 40px; height: 40px; object-fit: contain; opacity: 0.9;">
+                                <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+                            </div>
                             <button class="btn-logout flex items-center gap-2 bg-orange-700 text-white px-4 py-2 rounded-lg hover:bg-orange-800" style="background-color: #c2410c;">
                                 🚪 Logout
                             </button>
@@ -1283,7 +1657,7 @@
 
                 // Shop page
                 const homeBtn = document.querySelector('.btn-home');
-                if (homeBtn) homeBtn.addEventListener('click', () => this.setPage('shop'));
+                if (homeBtn) homeBtn.addEventListener('click', () => this.setPage('home'));
 
                 const cartViewBtn = document.querySelector('.btn-cart-view');
                 if (cartViewBtn) cartViewBtn.addEventListener('click', () => this.setPage('cart'));
@@ -1386,6 +1760,59 @@
                 const backHomeBtn = document.querySelector('.btn-back-home');
                 if (backHomeBtn) backHomeBtn.addEventListener('click', () => this.setPage('home'));
 
+                // Rating and Review
+                const ratingStars = document.querySelectorAll('.rating-star');
+                ratingStars.forEach(star => {
+                    star.addEventListener('click', (e) => {
+                        const rating = parseInt(e.target.dataset.rating);
+                        const orderId = parseInt(e.target.dataset.orderId);
+                        
+                        // Update all stars
+                        document.querySelectorAll('.rating-star').forEach(s => {
+                            const r = parseInt(s.dataset.rating);
+                            s.textContent = r <= rating ? '⭐' : '☆';
+                            s.style.filter = r <= rating ? 'drop-shadow(0 0 3px #fbbf24)' : 'none';
+                        });
+
+                        // Store rating temporarily
+                        window.selectedRating = rating;
+                    });
+
+                    star.addEventListener('mouseover', (e) => {
+                        const rating = parseInt(e.target.dataset.rating);
+                        document.querySelectorAll('.rating-star').forEach(s => {
+                            const r = parseInt(s.dataset.rating);
+                            s.textContent = r <= rating ? '⭐' : '☆';
+                            s.style.opacity = '0.7';
+                        });
+                    });
+
+                    star.addEventListener('mouseout', (e) => {
+                        const savedRating = window.selectedRating || 0;
+                        document.querySelectorAll('.rating-star').forEach(s => {
+                            const r = parseInt(s.dataset.rating);
+                            s.textContent = r <= savedRating ? '⭐' : '☆';
+                            s.style.opacity = '1';
+                        });
+                    });
+                });
+
+                const submitReviewBtn = document.querySelector('.btn-submit-review');
+                if (submitReviewBtn) {
+                    submitReviewBtn.addEventListener('click', (e) => {
+                        const orderId = parseInt(e.target.dataset.orderId);
+                        const rating = window.selectedRating || 0;
+                        const comment = document.getElementById('review-comment')?.value || '';
+
+                        if (rating === 0) {
+                            Toast.show('Please select a rating', 'error');
+                            return;
+                        }
+
+                        this.addReview(orderId, rating, comment);
+                    });
+                }
+
                 // Admin Login
                 const adminEmailInput = document.getElementById('admin-email');
                 if (adminEmailInput) {
@@ -1406,6 +1833,16 @@
 
                 const adminBackBtn = document.querySelector('.btn-admin-back');
                 if (adminBackBtn) adminBackBtn.addEventListener('click', () => this.setPage('home'));
+
+                // Reviews page
+                const viewReviewsBtn = document.querySelector('.btn-view-reviews');
+                if (viewReviewsBtn) viewReviewsBtn.addEventListener('click', () => this.setPage('reviews'));
+
+                const backHomeReviewsBtn = document.querySelector('.btn-back-home-reviews');
+                if (backHomeReviewsBtn) backHomeReviewsBtn.addEventListener('click', () => this.setPage('home'));
+
+                const shopNowReviewsBtn = document.querySelector('.btn-shop-now-reviews');
+                if (shopNowReviewsBtn) shopNowReviewsBtn.addEventListener('click', () => this.setPage('shop'));
 
                 // Admin Dashboard
                 const logoutBtn = document.querySelector('.btn-logout');
@@ -1466,8 +1903,21 @@
                         this.setCrateSize(parseInt(e.target.value));
                     });
                 }
+
+                // Theme toggle button
+                const themeToggleBtns = document.querySelectorAll('.theme-toggle');
+                themeToggleBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        themeManager.toggle();
+                        this.isDarkMode = themeManager.isDark();
+                        this.render();
+                    });
+                });
             }
         }
+
+        // Initialize theme manager first
+        const themeManager = new ThemeManager();
 
         // Initialize app
         const app = new EggStore();
